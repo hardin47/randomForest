@@ -24,6 +24,7 @@ Modifications to get the forest out Matt Wiener Feb. 26, 2002.
 #include <R.h>
 #include <R_ext/Utils.h>
 #include "rf.h"
+#include "multinomial.c"
 
 void oob(int nsample, int nclass, int *jin, int *cl, int *jtr,int *jerr,
          int *counttr, int *out, double *errtr, int *jest, double *cutoff);
@@ -221,6 +222,12 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 
     /* Starting the main loop over number of trees. */
     GetRNGstate();
+    
+    /* trying to test multinomial */
+    unsigned int n[10];
+    double p[5] = {0.2,0.2,0.2,0.2,0.2};
+    gsl_ran_mutlinomial(const gsl_rng * r,size_t 5,10,p,n);
+
     if (trace <= Ntree) {
 	/* Print header for running output. */
 	Rprintf("ntree      OOB");
