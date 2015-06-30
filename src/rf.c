@@ -224,9 +224,9 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     GetRNGstate();
     
     /* trying to test multinomial */
-    unsigned int n[10];
-    double p[5] = {0.2,0.2,0.2,0.2,0.2};
-    gsl_ran_mutlinomial(1,5,10,p,n);
+    unsigned int coeffs[10];
+    double probs[5] = {0.2,0.2,0.2,0.2,0.2};
+    gsl_ran_mutlinomial(1,5,10,probs,coeffs);
 
     if (trace <= Ntree) {
 	/* Print header for running output. */
