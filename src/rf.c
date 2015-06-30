@@ -226,7 +226,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     /* trying to test multinomial */
     unsigned int n[10];
     double p[5] = {0.2,0.2,0.2,0.2,0.2};
-    gsl_ran_mutlinomial(const gsl_rng * r,size_t 5,10,p,n);
+    gsl_ran_mutlinomial(1,5,10,p,n);
 
     if (trace <= Ntree) {
 	/* Print header for running output. */
