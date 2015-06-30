@@ -1,153 +1,282 @@
-/* config.h  */
+/* config.h.in.  Generated from configure.ac by autoheader.  */
 
-#ifndef PTW32_CONFIG_H
-#define PTW32_CONFIG_H
+/* Define to 1 if you have the declaration of `acosh', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ACOSH
 
-/*********************************************************************
- * Defaults: see target specific redefinitions below.
- *********************************************************************/
+/* Define to 1 if you have the declaration of `asinh', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ASINH
 
-/* We're building the pthreads-win32 library */
-#define PTW32_BUILD
+/* Define to 1 if you have the declaration of `atanh', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ATANH
 
-/* Do we know about the C type sigset_t? */
-#undef HAVE_SIGSET_T
+/* Define to 1 if you have the declaration of `expm1', and to 0 if you don't.
+   */
+#undef HAVE_DECL_EXPM1
 
-/* Define if you have the <signal.h> header file.  */
-#undef HAVE_SIGNAL_H
+/* Define to 1 if you have the declaration of `feenableexcept', and to 0 if
+   you don't. */
+#undef HAVE_DECL_FEENABLEEXCEPT
 
-/* Define if you have the Borland TASM32 or compatible assembler.  */
-#undef HAVE_TASM32
+/* Define to 1 if you have the declaration of `fesettrapenable', and to 0 if
+   you don't. */
+#undef HAVE_DECL_FESETTRAPENABLE
 
-/* Define if you don't have Win32 DuplicateHandle. (eg. WinCE) */
-#undef NEED_DUPLICATEHANDLE
+/* Define to 1 if you have the declaration of `finite', and to 0 if you don't.
+   */
+#undef HAVE_DECL_FINITE
 
-/* Define if you don't have Win32 _beginthreadex. (eg. WinCE) */
-#undef NEED_CREATETHREAD
+/* Define to 1 if you have the declaration of `frexp', and to 0 if you don't.
+   */
+#undef HAVE_DECL_FREXP
 
-/* Define if you don't have Win32 errno. (eg. WinCE) */
-#undef NEED_ERRNO
+/* Define to 1 if you have the declaration of `hypot', and to 0 if you don't.
+   */
+#undef HAVE_DECL_HYPOT
 
-/* Define if you don't have Win32 calloc. (eg. WinCE)  */
-#undef NEED_CALLOC
+/* Define to 1 if you have the declaration of `isfinite', and to 0 if you
+   don't. */
+#undef HAVE_DECL_ISFINITE
 
-/* Define if you don't have Win32 ftime. (eg. WinCE)  */
-#undef NEED_FTIME
+/* Define to 1 if you have the declaration of `isinf', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ISINF
 
-/* Define if you don't have Win32 semaphores. (eg. WinCE 2.1 or earlier)  */
-#undef NEED_SEM
+/* Define to 1 if you have the declaration of `isnan', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ISNAN
 
-/* Define if you need to convert string parameters to unicode. (eg. WinCE)  */
-#undef NEED_UNICODE_CONSTS
+/* Define to 1 if you have the declaration of `ldexp', and to 0 if you don't.
+   */
+#undef HAVE_DECL_LDEXP
 
-/* Define if your C (not C++) compiler supports "inline" functions. */
-#undef HAVE_C_INLINE
+/* Define to 1 if you have the declaration of `log1p', and to 0 if you don't.
+   */
+#undef HAVE_DECL_LOG1P
 
-/* Do we know about type mode_t? */
-#undef HAVE_MODE_T
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
 
-/* 
- * Define if GCC has atomic builtins, i.e. __sync_* intrinsics
- * __sync_lock_* is implemented in mingw32 gcc 4.5.2 at least
- * so this define does not turn those on or off. If you get an
- * error from __sync_lock* then consider upgrading your gcc.
- */
-#undef HAVE_GCC_ATOMIC_BUILTINS
+/* Define to 1 if you don't have `vprintf' but do have `_doprnt.' */
+#undef HAVE_DOPRNT
 
-/* Define if you have the timespec struct */
-#undef HAVE_STRUCT_TIMESPEC
+/* Define to 1 if you have the <ieeefp.h> header file. */
+#undef HAVE_IEEEFP_H
 
-/* Define if you don't have the GetProcessAffinityMask() */
-#undef NEED_PROCESS_AFFINITY_MASK
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
 
-/* Define if your version of Windows TLSGetValue() clears WSALastError
- * and calling SetLastError() isn't enough restore it. You'll also need to
- * link against wsock32.lib (or libwsock32.a for MinGW).
- */
-#undef RETAIN_WSALASTERROR
+/* Define to 1 if you have the `m' library (-lm). */
+#undef HAVE_LIBM
 
-/*
-# ----------------------------------------------------------------------
-# The library can be built with some alternative behaviour to better
-# facilitate development of applications on Win32 that will be ported
-# to other POSIX systems.
-#
-# Nothing described here will make the library non-compliant and strictly
-# compliant applications will not be affected in any way, but
-# applications that make assumptions that POSIX does not guarantee are
-# not strictly compliant and may fail or misbehave with some settings.
-#
-# PTW32_THREAD_ID_REUSE_INCREMENT
-# Purpose:
-# POSIX says that applications should assume that thread IDs can be
-# recycled. However, Solaris (and some other systems) use a [very large]
-# sequence number as the thread ID, which provides virtual uniqueness.
-# This provides a very high but finite level of safety for applications
-# that are not meticulous in tracking thread lifecycles e.g. applications
-# that call functions which target detached threads without some form of
-# thread exit synchronisation.
-#
-# Usage:
-# Set to any value in the range: 0 <= value < 2^wordsize.
-# Set to 0 to emulate reusable thread ID behaviour like Linux or *BSD.
-# Set to 1 for unique thread IDs like Solaris (this is the default).
-# Set to some factor of 2^wordsize to emulate smaller word size types
-# (i.e. will wrap sooner). This might be useful to emulate some embedded
-# systems.
-#
-# define PTW32_THREAD_ID_REUSE_INCREMENT 0
-#
-# ----------------------------------------------------------------------
- */
-#undef PTW32_THREAD_ID_REUSE_INCREMENT
+/* Define to 1 if you have the `memcpy' function. */
+#undef HAVE_MEMCPY
 
+/* Define to 1 if you have the `memmove' function. */
+#undef HAVE_MEMMOVE
 
-/*********************************************************************
- * Target specific groups
- *
- * If you find that these are incorrect or incomplete please report it
- * to the pthreads-win32 maintainer. Thanks.
- *********************************************************************/
-#if defined(WINCE)
-#define NEED_DUPLICATEHANDLE
-#define NEED_CREATETHREAD
-#define NEED_ERRNO
-#define NEED_CALLOC
-#define NEED_FTIME
-/* #define NEED_SEM */
-#define NEED_UNICODE_CONSTS
-#define NEED_PROCESS_AFFINITY_MASK
-/* This may not be needed */
-#define RETAIN_WSALASTERROR
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strdup' function. */
+#undef HAVE_STRDUP
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the `strtol' function. */
+#undef HAVE_STRTOL
+
+/* Define to 1 if you have the `strtoul' function. */
+#undef HAVE_STRTOUL
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `vprintf' function. */
+#undef HAVE_VPRINTF
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
 #endif
 
-#if defined(_UWIN)
-#define HAVE_MODE_T
-#define HAVE_STRUCT_TIMESPEC
+/* Define to `unsigned' if <sys/types.h> does not define. */
+#undef size_t
+
+/* Define to empty if the keyword `volatile' does not work. Warning: valid
+   code using `volatile' can become incorrect without. Disable with care. */
+#undef volatile
+
+/* Defined if this is an official release */
+#undef RELEASED
+
+/* Define if you have inline */
+#undef HAVE_INLINE
+
+/* Define if you need to hide the static definitions of inline functions */
+#undef HIDE_INLINE_STATIC
+
+/* Defined if you have ansi EXIT_SUCCESS and EXIT_FAILURE in stdlib.h */
+#undef HAVE_EXIT_SUCCESS_AND_FAILURE
+
+/* Use 0 and 1 for EXIT_SUCCESS and EXIT_FAILURE if we don't have them */
+#if !HAVE_EXIT_SUCCESS_AND_FAILURE
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
 #endif
 
-#if defined(__GNUC__)
-#define HAVE_C_INLINE
+/* Define this if printf can handle %Lf for long double */
+#undef HAVE_PRINTF_LONGDOUBLE
+
+/* Define one of these if you have a known IEEE arithmetic interface */
+#undef HAVE_GNUSPARC_IEEE_INTERFACE
+#undef HAVE_GNUM68K_IEEE_INTERFACE
+#undef HAVE_GNUPPC_IEEE_INTERFACE
+#undef HAVE_GNUX86_IEEE_INTERFACE
+#undef HAVE_SUNOS4_IEEE_INTERFACE
+#undef HAVE_SOLARIS_IEEE_INTERFACE
+#undef HAVE_HPUX11_IEEE_INTERFACE
+#undef HAVE_HPUX_IEEE_INTERFACE
+#undef HAVE_TRU64_IEEE_INTERFACE
+#undef HAVE_IRIX_IEEE_INTERFACE
+#undef HAVE_AIX_IEEE_INTERFACE
+#undef HAVE_FREEBSD_IEEE_INTERFACE
+#undef HAVE_OS2EMX_IEEE_INTERFACE
+#undef HAVE_NETBSD_IEEE_INTERFACE
+#undef HAVE_OPENBSD_IEEE_INTERFACE
+#undef HAVE_DARWIN_IEEE_INTERFACE
+#undef HAVE_DARWIN86_IEEE_INTERFACE
+
+/* Define this if IEEE comparisons work correctly (e.g. NaN != NaN) */
+#undef HAVE_IEEE_COMPARISONS
+
+/* Define this if IEEE denormalized numbers are available */
+#undef HAVE_IEEE_DENORMALS
+
+/* Define a rounding function which moves extended precision values
+   out of registers and rounds them to double-precision. This should
+   be used *sparingly*, in places where it is necessary to keep
+   double-precision rounding for critical expressions while running in
+   extended precision. For example, the following code should ensure
+   exact equality, even when extended precision registers are in use,
+
+      double q = GSL_COERCE_DBL(3.0/7.0) ;
+      if (q == GSL_COERCE_DBL(3.0/7.0)) { ... } ;
+
+   It carries a penalty even when the program is running in double
+   precision mode unless you compile a separate version of the
+   library with HAVE_EXTENDED_PRECISION_REGISTERS turned off. */
+
+#undef HAVE_EXTENDED_PRECISION_REGISTERS
+
+#if HAVE_EXTENDED_PRECISION_REGISTERS
+#define GSL_COERCE_DBL(x) (gsl_coerce_double(x))
+#else
+#define GSL_COERCE_DBL(x) (x)
 #endif
 
-#if defined(__MINGW64__)
-#define HAVE_MODE_T
-#define HAVE_STRUCT_TIMESPEC
-#elif defined(__MINGW32__)
-#define HAVE_MODE_T
+/* Substitute gsl functions for missing system functions */
+
+#if !HAVE_DECL_HYPOT
+#define hypot gsl_hypot
 #endif
 
-#if defined(__BORLANDC__)
+#if !HAVE_DECL_LOG1P
+#define log1p gsl_log1p
 #endif
 
-#if defined(__WATCOMC__)
+#if !HAVE_DECL_EXPM1
+#define expm1 gsl_expm1
 #endif
 
-#if defined(__DMC__)
-#define HAVE_SIGNAL_H
-#define HAVE_C_INLINE
+#if !HAVE_DECL_ACOSH
+#define acosh gsl_acosh
 #endif
 
-
-
+#if !HAVE_DECL_ASINH
+#define asinh gsl_asinh
 #endif
+
+#if !HAVE_DECL_ATANH
+#define atanh gsl_atanh
+#endif
+
+#if !HAVE_DECL_LDEXP
+#define ldexp gsl_ldexp
+#endif
+
+#if !HAVE_DECL_FREXP
+#define frexp gsl_frexp
+#endif
+
+#if !HAVE_DECL_ISINF
+#define isinf gsl_isinf
+#endif
+
+#if !HAVE_DECL_FINITE
+#if HAVE_DECL_ISFINITE
+#define finite isfinite
+#else
+#define finite gsl_finite
+#endif
+#endif
+
+#if !HAVE_DECL_ISNAN
+#define isnan gsl_isnan
+#endif
+
+#ifdef __GNUC__
+#define DISCARD_POINTER(p) do { ; } while(p ? 0 : 0);
+#else
+#define DISCARD_POINTER(p) /* ignoring discarded pointer */
+#endif
+
+#if defined(GSL_RANGE_CHECK_OFF) || !defined(GSL_RANGE_CHECK)
+#define GSL_RANGE_CHECK 0  /* turn off range checking by default internally */
+#endif
+
+/* Disable deprecated functions and enums while building */
+#define GSL_DISABLE_DEPRECATED 1

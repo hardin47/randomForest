@@ -1,10 +1,10 @@
 /* randist/gsl_randist.h
  * 
- * Copyright (C) 1996, 1997, 1998, 1999, 2000, 2007 James Theiler, Brian Gough
+ * Copyright (C) 1996, 1997, 1998, 1999, 2000 James Theiler, Brian Gough
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or (at
+ * the Free Software Foundation; either version 2 of the License, or (at
  * your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but
@@ -19,7 +19,7 @@
 
 #ifndef __GSL_RANDIST_H__
 #define __GSL_RANDIST_H__
-#include <gsl/gsl_rng.h>
+#include "gsl_rng.h"
 
 #undef __BEGIN_DECLS
 #undef __END_DECLS
