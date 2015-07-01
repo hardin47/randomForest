@@ -37,8 +37,7 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 		  int nclass, int nvote, double *errts,
 		  int labelts, int *nclts, double *cutoff);
 
-void
-gsl_ran_multinomial (const gsl_rng * r, const size_t K,
+void gsl_ran_multinomial (const gsl_rng * r, const size_t K,
                      const unsigned int N, const double p[], unsigned int n[])
 {
   size_t k;
