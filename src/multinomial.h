@@ -1,1 +1,0 @@
-void gsl_ran_multinomial (const gsl_rng * r, size_t K, unsigned int N, const double p[], unsigned int n[]);
