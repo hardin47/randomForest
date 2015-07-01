@@ -37,7 +37,7 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 		  int nclass, int nvote, double *errts,
 		  int labelts, int *nclts, double *cutoff);
 
-void gsl_ran_multinomial (const unsigned int r, const size_t K,
+void gsl_ran_multinomial (const gsl_rng * r, const size_t K,
                      const unsigned int N, const double p[], unsigned int n[])
 {
   size_t k;
@@ -266,7 +266,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     /* trying to test multinomial */
     unsigned int coeffs[10];
     double probs[5] = {0.2,0.2,0.2,0.2,0.2};
-    gsl_ran_multinomial(1,5,10,probs,coeffs);
+    gsl_ran_multinomial(r,5,10,probs,coeffs);
 
     if (trace <= Ntree) {
 	/* Print header for running output. */
