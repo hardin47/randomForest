@@ -25,6 +25,7 @@ Modifications to get the forest out Matt Wiener Feb. 26, 2002.
 #include <R_ext/Utils.h>
 #include "rf.h"
 #include "multinomial.c"
+#include "multinomial.h"
 
 void oob(int nsample, int nclass, int *jin, int *cl, int *jtr,int *jerr,
          int *counttr, int *out, double *errtr, int *jest, double *cutoff);
