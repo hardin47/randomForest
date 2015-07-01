@@ -266,7 +266,28 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     /* trying to test multinomial */
     unsigned int coeffs[10];
     double probs[5] = {0.2,0.2,0.2,0.2,0.2};
-    gsl_ran_multinomial(gsl_rng * r,5,10,probs,coeffs);
+
+    /* for loop implementation
+    double probs[B];
+    for (k = 0,,k++) {
+        probs[k] = 1/B;
+    }
+    */
+
+    const gsl_rng_type * T;
+    gsl_rng * r;
+
+    /* create a generator chosen by the 
+     environment variable GSL_RNG_TYPE */
+
+    gsl_rng_env_setup();
+
+    T = gsl_rng_default;
+    r = gsl_rng_alloc (T);
+
+    gsl_ran_multinomial(r,5,10,probs,coeffs);
+
+    gsl_rng_free (r);
 
     if (trace <= Ntree) {
 	/* Print header for running output. */
