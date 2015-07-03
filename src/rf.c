@@ -274,7 +274,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     }
     */
 
-    /*const gsl_rng_type * T; */
+    const gsl_rng_type * T;
     gsl_rng * r;
 
     /* create a generator chosen by the 
@@ -282,8 +282,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 
     gsl_rng_env_setup();
 
-    /* T = gsl_rng_default;*/
-    r = gsl_rng_alloc(gsl_rng_taus);
+    T = gsl_rng_default;
+    r = gsl_rng_alloc(T);
 
     gsl_ran_multinomial(r,5,10,probs,coeffs);
 
