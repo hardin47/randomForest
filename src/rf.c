@@ -275,20 +275,20 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     }
     */
 
-    const gsl_rng_type * T;
-    gsl_rng * r;
+    /*const gsl_rng_type * T;
+    gsl_rng * r;*/
 
     /* create a generator chosen by the 
      environment variable GSL_RNG_TYPE */
 
-    gsl_rng_env_setup();
+    /*gsl_rng_env_setup();
 
     T = gsl_rng_default;
     r = gsl_rng_alloc(T);
 
     gsl_ran_multinomial(r,5,10,probs,coeffs);
 
-    gsl_rng_free(r);
+    gsl_rng_free(r);*/
 
     if (trace <= Ntree) {
 	/* Print header for running output. */
