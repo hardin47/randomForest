@@ -265,7 +265,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     GetRNGstate();
     
     /* trying to test multinomial */
-    unsigned int coeffs[10];
+    unsigned int coeffs[5];
     double probs[5] = {0.2,0.2,0.2,0.2,0.2};
 
     /* for loop implementation
