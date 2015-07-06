@@ -274,7 +274,6 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     }
     */
 
-    const gsl_rng_type * T;
     gsl_rng * r;
 
     /* create a generator chosen by the 
