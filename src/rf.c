@@ -23,13 +23,13 @@ Modifications to get the forest out Matt Wiener Feb. 26, 2002.
 
 #include <R.h>
 #include <R_ext/Utils.h>
-#include "rf.h"
-#include "config.h"
+#include <rf.h>
+#include <config.h>
 #include <math.h>
-#include "stdio.h"
-#include "gsl_rng.h"
-#include "gsl_randist.h"
-#include "gsl_sf_gamma.h"
+#include <stdio.h>
+#include <gsl_rng.h>
+#include <gsl_randist.h>
+#include <gsl_sf_gamma.h>
 
 void oob(int nsample, int nclass, int *jin, int *cl, int *jtr,int *jerr,
          int *counttr, int *out, double *errtr, int *jest, double *cutoff);
