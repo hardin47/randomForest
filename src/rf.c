@@ -282,7 +282,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 
     gsl_rng_env_setup();
 
-    T = gsl_rng_default;
+    const gsl_rng_type * T;
+    /*T = gsl_rng_default;*/
     r = gsl_rng_alloc(T);
 
     gsl_ran_multinomial(r,5,10,probs,coeffs);
