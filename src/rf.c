@@ -26,6 +26,7 @@ Modifications to get the forest out Matt Wiener Feb. 26, 2002.
 #include "rf.h"
 #include "config.h"
 #include <math.h>
+#include "stdio.h"
 #include "gsl_rng.h"
 #include "gsl_randist.h"
 #include "gsl_sf_gamma.h"
