@@ -58,7 +58,7 @@ void regTree(double *x, double *y, int mdim, int nsample, int *lDaughter,
     for (i = 0; i < nsample; ++i) { 
     	d = y[jdex[i] - 1]; 
     	g = multinomialCoeffs[jdex[i]-1]; 
-    	ss += (g * ms) / (ms + g)) * (av - d) * (av - d);
+    	ss += ((g * ms) / (ms + g)) * (av - d) * (av - d);
     	av = (av * ms + g * d) / (ms + g); 
     	ms += g; 
     }
