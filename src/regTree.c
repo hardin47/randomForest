@@ -32,7 +32,7 @@ void regTree(double *x, double *y, int mdim, int nsample, int *lDaughter,
 	     double *tgini, int *varUsed, unsigned int multinomialCoeffs[]) {
     int i, j, k, m, ncur, *jdex, *nodestart, *nodepop;
     int ndstart, ndend, ndendl, nodecnt, jstat, msplit;
-    double d, ss, av, decsplit, ubest, sumnode;
+    double d, ss, av, ms, decsplit, ubest, sumnode;
 
     nodestart = (int *) Calloc(nrnodes, int);
     nodepop   = (int *) Calloc(nrnodes, int);
@@ -54,10 +54,13 @@ void regTree(double *x, double *y, int mdim, int nsample, int *lDaughter,
     /* compute mean and sum of squares for Y */
     av = 0.0;
     ss = 0.0;
-    for (i = 0; i < nsample; ++i) {
-		d = y[jdex[i] - 1];
-		ss += i * (av - d) * (av - d) / (i + 1);
-		av = (i * av + d) / (i + 1);
+    ms = 0.0;
+    for (i = 0; i < nsample; ++i) { 
+    	d = y[jdex[i] - 1]; 
+    	g = coeffs[jdex[i]-1]; 
+    	ss += (g * ms) / (ms + g)) * (av - d) * (av - d);
+    	av = (av * ms + g * d) / (ms + g); 
+    	ms += g; 
     }
     avnode[0] = av;
 
