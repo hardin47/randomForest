@@ -88,13 +88,13 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
     double errts = 0.0, averrb, meanY, meanYts, varY, varYts, r, xrand,
 	errb = 0.0, resid=0.0, ooberr, ooberrperm, delta, *resOOB;
 
-    double *yb, *xtmp, *xb, *ytr, *ytree, *tgini, *coeffs, *probs;
+    double *yb, *xtmp, *xb, *ytr, *ytree, *tgini, *coeffs;
 
     int k, m, mr, n, nOOB, j, jout, idx, ntest, last, ktmp, nPerm,
         nsample, mdim, keepF, keepInbag;
     int *oobpair, varImp, localImp, *varUsed;
 
-    int *in, *nind, *nodex, *nodexts;
+    int *in, *nind, *nodex, *nodexts, *probs;
 
     nsample = xdim[0];
     mdim = xdim[1];
@@ -113,8 +113,8 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
     xtmp       = (double *) S_alloc(nsample, sizeof(double));
     resOOB     = (double *) S_alloc(nsample, sizeof(double));
     coeffs     = (double *) S_alloc(*sampsize, sizeof(double));
-    probs      = (double *) S_alloc(*sampsize, sizeof(double));
-
+  
+    probs      = (int *) S_alloc(*sampsize, sizeof(int));
     in        = (int *) S_alloc(nsample, sizeof(int));
     nodex      = (int *) S_alloc(nsample, sizeof(int));
     varUsed    = (int *) S_alloc(mdim, sizeof(int));
