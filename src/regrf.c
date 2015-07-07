@@ -183,11 +183,11 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
     unsigned int coeffs[nsample];
     /* for loop implementation */
     double probs[nsample];
-    for (k = 0,k < nsample,k++) {
+    for (k = 0; k < nsample; ++k) {
         probs[k] = 1/nsample;
     }
 
-    ran_multinomial(nsample,bigN,probs,coeffs);
+    ran_multinomial(nsample,100,probs,coeffs);
 
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
