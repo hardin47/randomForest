@@ -112,6 +112,8 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
     ytr        = (double *) S_alloc(nsample, sizeof(double));
     xtmp       = (double *) S_alloc(nsample, sizeof(double));
     resOOB     = (double *) S_alloc(nsample, sizeof(double));
+    coeffs     = (double *) S_alloc(*sampsize, sizeof(double));
+    probs      = (double *) S_alloc(*sampsize, sizeof(double));
 
     in        = (int *) S_alloc(nsample, sizeof(int));
     nodex      = (int *) S_alloc(nsample, sizeof(int));
@@ -180,9 +182,9 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
     for (j = 0; j < *nTree; ++j) {
 
     /* multinomial */
-    unsigned int coeffs[*sampsize];
+    /*unsigned int coeffs[*sampsize];*/
     /* for loop implementation */
-    double probs[*sampsize];
+    /*double probs[*sampsize];*/
     for (k = 0; k < *sampsize; ++k) {
         probs[k] = 1/(*sampsize);
     }
