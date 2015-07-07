@@ -23,13 +23,8 @@ Modifications to get the forest out Matt Wiener Feb. 26, 2002.
 
 #include <R.h>
 #include <R_ext/Utils.h>
+#include <Rmath.h>
 #include "rf.h"
-#include "config.h"
-#include <math.h>
-#include <stdio.h>
-#include <gsl_rng.h>
-#include <gsl_randist.h>
-#include <gsl_sf_gamma.h>
 
 void oob(int nsample, int nclass, int *jin, int *cl, int *jtr,int *jerr,
          int *counttr, int *out, double *errtr, int *jest, double *cutoff);
@@ -38,8 +33,8 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 		  int nclass, int nvote, double *errts,
 		  int labelts, int *nclts, double *cutoff);
 
-void gsl_ran_multinomial (const gsl_rng * r, const size_t K,
-                     const unsigned int N, const double p[], unsigned int n[])
+void ran_multinomial (const size_t K,const unsigned int N, 
+						const double p[], unsigned int n[])
 {
   size_t k;
   double norm = 0.0;
@@ -61,7 +56,7 @@ void gsl_ran_multinomial (const gsl_rng * r, const size_t K,
     {
       if (p[k] > 0.0)
         {
-          n[k] = gsl_ran_binomial (r, p[k] / (norm - sum_p), N - sum_n);
+          n[k] = rbinom(N - sum_n , p[k] / (norm - sum_p));
         }
       else
         {
@@ -261,9 +256,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 
     R_CheckUserInterrupt();
 
-    /* Starting the main loop over number of trees. */
-    GetRNGstate();
-    
+
     /* trying to test multinomial */
     unsigned int coeffs[5];
     double probs[5] = {0.2,0.2,0.2,0.2,0.2};
@@ -275,21 +268,16 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     }
     */
 
-    const gsl_rng_type * T;
-    gsl_rng * r;
 
     /* create a generator chosen by the 
      environment variable GSL_RNG_TYPE */
 
-    gsl_rng_env_setup();
+    ran_multinomial(5,10,probs,coeffs);
 
-    T = gsl_rng_default;
-    r = gsl_rng_alloc(T);
 
-    gsl_ran_multinomial(r,5,10,probs,coeffs);
 
-    gsl_rng_free(r);
-
+    /* Starting the main loop over number of trees. */
+    GetRNGstate();
     if (trace <= Ntree) {
 	/* Print header for running output. */
 	Rprintf("ntree      OOB");
