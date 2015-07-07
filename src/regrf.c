@@ -13,11 +13,47 @@
 *******************************************************************/
 
 #include <R.h>
+#include <Rmath.h>
 #include "rf.h"
 
 void simpleLinReg(int nsample, double *x, double *y, double *coef,
 		  double *mse, int *hasPred);
 
+void ran_multinomial (const size_t K,const unsigned int N, 
+            const double p[], unsigned int n[])
+{
+  size_t k;
+  double norm = 0.0;
+  double sum_p = 0.0;
+
+  unsigned int sum_n = 0;
+
+  /* p[k] may contain non-negative weights that do not sum to 1.0.
+   * Even a probability distribution will not exactly sum to 1.0
+   * due to rounding errors. 
+   */
+
+  for (k = 0; k < K; k++)
+    {
+      norm += p[k];
+    }
+
+  for (k = 0; k < K; k++)
+    {
+      if (p[k] > 0.0)
+        {
+          n[k] = rbinom(N - sum_n , p[k] / (norm - sum_p));
+        }
+      else
+        {
+          n[k] = 0;
+        }
+
+      sum_p += p[k];
+      sum_n += n[k];
+    }
+
+}
 
 void regRF(double *x, double *y, int *xdim, int *sampsize,
 	   int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
@@ -142,6 +178,22 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
      * Start the loop over trees.
      *************************************/
     for (j = 0; j < *nTree; ++j) {
+
+    /* multinomial */
+    unsigned int coeffs[5];
+    double probs[5] = {0.2,0.2,0.2,0.2,0.2};
+
+    /* for loop implementation
+    double probs[B];
+    for (k = 0,,k++) {
+        probs[k] = 1/B;
+    }
+    */
+
+
+
+    ran_multinomial(5,10,probs,coeffs);
+
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
         zeroInt(varUsed, mdim);
