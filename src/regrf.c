@@ -180,19 +180,14 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
     for (j = 0; j < *nTree; ++j) {
 
     /* multinomial */
-    unsigned int coeffs[5];
-    double probs[5] = {0.2,0.2,0.2,0.2,0.2};
-
-    /* for loop implementation
-    double probs[B];
-    for (k = 0,,k++) {
-        probs[k] = 1/B;
+    unsigned int coeffs[nsample];
+    /* for loop implementation */
+    double probs[nsample];
+    for (k = 0,k < nsample,k++) {
+        probs[k] = 1/nsample;
     }
-    */
 
-
-
-    ran_multinomial(5,10,probs,coeffs);
+    ran_multinomial(nsample,bigN,probs,coeffs);
 
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
