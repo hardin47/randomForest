@@ -116,11 +116,13 @@ void regTree(double *x, double *y, int mdim, int nsample, int *lDaughter,
 		/* compute mean and sum of squares for the left daughter node */
 		av = 0.0;
 		ss = 0.0;
-		for (j = ndstart; j <= ndendl; ++j) {
-			d = y[jdex[j]-1];
-			m = j - ndstart;
-			ss += m * (av - d) * (av - d) / (m + 1);
-			av = (m * av + d) / (m+1);
+		ms = 0.0;
+		for (j = ndstart; j <= ndendl; ++j) { 
+    		d = y[jdex[i] - 1]; 
+    		g = multinomialCoeffs[jdex[i]-1]; 
+    		ss += ((g * ms) / (ms + g)) * (av - d) * (av - d);
+    		av = (av * ms + g * d) / (ms + g); 
+    		ms += g;
 		}
 		avnode[ncur+1] = av;
 		nodestatus[ncur+1] = NODE_TOSPLIT;
@@ -131,11 +133,13 @@ void regTree(double *x, double *y, int mdim, int nsample, int *lDaughter,
 		/* compute mean and sum of squares for the right daughter node */
 		av = 0.0;
 		ss = 0.0;
+		ms = 0.0;
 		for (j = ndendl + 1; j <= ndend; ++j) {
-			d = y[jdex[j]-1];
-			m = j - (ndendl + 1);
-			ss += m * (av - d) * (av - d) / (m + 1);
-			av = (m * av + d) / (m + 1);
+			d = y[jdex[i] - 1]; 
+    		g = multinomialCoeffs[jdex[i]-1]; 
+    		ss += ((g * ms) / (ms + g)) * (av - d) * (av - d);
+    		av = (av * ms + g * d) / (ms + g); 
+    		ms += g;
 		}
 		avnode[ncur + 2] = av;
 		nodestatus[ncur + 2] = NODE_TOSPLIT;
